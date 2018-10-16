@@ -5,12 +5,53 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,700" rel="stylesheet">
     <link rel="stylesheet" href="./index.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="./index.js"></script>
     <title>Despachador</title>
 </head>
 
 <body>
-
+    <div class="outer-wrapper">
+        <div class="row add-process-wrapper">
+            <form class="process-info-wrapper col s12">
+                <div class="row">
+                    <div class="input-field col l4 s12">
+                        <input class="validate" id="process_name" type="text">
+                        <label for="process_name">Nombre</label>
+                        <span class="helper-text" data-error="Incorrecto" data-success="Correcto">Texto</span>
+                    </div>
+                    <div class="input-field col l2 s4">
+                        <input class="validate" id="process_start" type="number">
+                        <label for="process_start">Comienzo</label>
+                        <span class="helper-text" data-error="Se necesita un número" data-success="Correcto">Número</span>
+                    </div>
+                    <div class="input-field col l2 s4">
+                        <input class="validate" id="process_duration" type="number">
+                        <label for="process_duration">Tamaño</label>
+                        <span class="helper-text" data-error="Se necesita un número" data-success="Correcto">Número</span>
+                    </div>
+                    <div class="input-field col l2 s4">
+                        <input class="validate" id="process_blockages" type="number">
+                        <label for="process_blockages">Bloqueos</label>
+                        <span class="helper-text" data-error="Se necesita un número" data-success="Correcto">Número</span>
+                    </div>
+                    <div class="input-field col l2 s12"><a id="add-process-button" class="waves-effect waves-light btn">Añadir</a></div>
+                </div>
+            </form>
+        </div>
+        <br>
+        <br>
+        <div class="row see-process-wrapper">
+            <ul id="process_collection" class="collection with-header">
+                <li class="collection-header">
+                    <h4>Procesos</h4>
+                </li>
+            </ul>
+        </div>
+    </div>
 </body>
 
 </html>
