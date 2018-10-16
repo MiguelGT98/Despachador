@@ -1,81 +1,109 @@
-tiempoDeQuantum = 3000;
-tiempoDeCambioDeContexto = 10;
-tiempoDeBloqueo = 10;
-numeroDeMicros = 1;
+document.addEventListener(
+  "DOMContentLoaded",
+  () => {
+    let addProcessButton = document.getElementById("add-process-button");
+
+    addProcessButton.addEventListener("click", e => {
+      addProcess();
+    });
+  },
+  false
+);
+
+let tiempoDeQuantum = 3000;
+let tiempoDeCambioDeContexto = 10;
+let tiempoDeBloqueo = 10;
+let numeroDeMicros = 1;
+
+let arrayProcesos = [];
 
 calcularTiempo = algo => {};
 
-procesos = [
-  {
-    nombre: "B",
-    empiezaEn: 0,
+let addProcess = () => {
+  let nameInput = document.getElementById("process_name");
+  let startTimeInput = document.getElementById("process_start");
+  let durationInput = document.getElementById("process_duration");
+  let blockagesInput = document.getElementById("process_blockages");
 
-    numeroDeBloqueos: 2,
-    tiempoDeCambioDeContexto: null,
-    tiempoDeEjecucion: 300,
-    tiempoDeVencimientoDeQuantum: null,
-    tiempoTotal: null,
-    tiempoDeInicio: null,
-    tiempoFinal: null
-  },
-  {
-    nombre: "D",
-    empiezaEn: 0,
+  if (
+    nameInput.value === "" ||
+    startTimeInput.value === "" ||
+    durationInput.value === "" ||
+    blockagesInput.value === "" ||
+    !isNumber(startTimeInput.value) ||
+    !isNumber(durationInput.value) ||
+    !isNumber(blockagesInput.value)
+  ) {
+    if (nameInput.value === "") {
+      nameInput.classList.add("invalid");
+    }
 
-    numeroDeBloqueos: 2,
-    tiempoDeCambioDeContexto: null,
-    tiempoDeEjecucion: 100,
-    tiempoDeVencimientoDeQuantum: null,
-    tiempoTotal: null,
-    tiempoDeInicio: null,
-    tiempoFinal: null
-  },
-  {
-    nombre: "H",
-    empiezaEn: 1500,
+    if (startTimeInput.value === "" || !isNumber(startTimeInput.value)) {
+      startTimeInput.classList.add("invalid");
+    }
 
-    numeroDeBloqueos: 4,
-    tiempoDeCambioDeContexto: null,
-    tiempoDeEjecucion: 700,
-    tiempoDeVencimientoDeQuantum: null,
-    tiempoTotal: null,
-    tiempoDeInicio: null,
-    tiempoFinal: null
-  },
-  {
-    nombre: "F",
-    empiezaEn: 0,
+    if (durationInput.value === "" || !isNumber(durationInput.value)) {
+      durationInput.classList.add("invalid");
+    }
 
-    numeroDeBloqueos: 3,
-    tiempoDeCambioDeContexto: null,
-    tiempoDeEjecucion: 500,
-    tiempoDeVencimientoDeQuantum: null,
-    tiempoTotal: null,
-    tiempoDeInicio: null,
-    tiempoFinal: null
+    if (blockagesInput.value === "" || !isNumber(blockagesInput.value)) {
+      blockagesInput.classList.add("invalid");
+    }
+    return;
   }
-];
 
-ejecucion = (
-  numeroDeMicros,
-  tiempoDeQuantum,
-  tiempoDeBloqueo,
-  tiempoDeCambioDeContexto,
-  procesos
-) => {
-  console.log(procesos);
+  let newProcess = new Proceso(
+    nameInput.value,
+    startTimeInput.value,
+    durationInput.value,
+    blockagesInput.value
+  );
 
-  let procesosOrdenados = procesos.slice(0).sort((a, b) => {
-    return a.empiezaEn > b.empiezaEn;
-  });
+  emptyInput(nameInput);
+  emptyInput(startTimeInput);
+  emptyInput(durationInput);
+  emptyInput(blockagesInput);
 
-  console.log(procesosOrdenados);
+  arrayProcesos.push(newProcess);
+  showProcess(newProcess);
 };
 
-ejecucion(
-  numeroDeMicros,
-  tiempoDeQuantum,
-  tiempoDeBloqueo,
-  tiempoDeCambioDeContexto,
-  procesos
-);
+function Proceso(name, startTime, duration, blockages) {
+  this.nombre = name;
+  this.empiezaEn = startTime;
+  this.tiempoDeEjecucion = duration;
+  this.numeroDeBloqueos = blockages;
+  this.tiempoDeCambioDeContexto = null;
+  this.tiempoDeVencimientoDeQuantum = null;
+  this.tiempoDeInicio = null;
+  this.tiempoTotal = null;
+  this.tiempoFinal = null;
+}
+
+let showProcess = process => {
+  let collection = document.getElementById("process_collection");
+
+  let processLi = document.createElement("li");
+  processLi.classList.add("collection-item");
+
+  let processDiv = document.createElement("div");
+  processDiv.innerText = process.nombre;
+  processLi.appendChild(processDiv);
+
+  let processSecondary = document.createElement("div");
+  processSecondary.classList.add("secondary-content");
+  processSecondary.innerText =
+    "Tiempo de ejecución: " + process.tiempoDeEjecucion;
+  processDiv.appendChild(processSecondary);
+
+  collection.appendChild(processLi);
+};
+
+let emptyInput = input => {
+  input.classList.remove("valid");
+  input.value = "";
+};
+
+let isNumber = n => {
+  return !isNaN(+n) && isFinite(n);
+};
