@@ -177,9 +177,9 @@ let calculate = (numeroDeMicros, tiempoDeBloqueo, tiempoDeCambioDeContexto, tiem
     )
   }
 
-  for (i = 0; i < procesos.length; i++) {
+  /*for (i = 0; i < procesos.length; i++) {
     console.log(procesos[i]);
-  }
+  }*/
 
   for (i = 0; i < micros; i++) {
     var m = {
@@ -363,7 +363,5 @@ let calculate = (numeroDeMicros, tiempoDeBloqueo, tiempoDeCambioDeContexto, tiem
   /* Una vez establecidos los valores se llama a la funcion del despachador para ejecutarse */
   ejecutarDespachador();
   crearTablas();
-  /*console.log(procesos);
-  console.log(microProcesador);*/
   /**************************************************************************************** */
 }
