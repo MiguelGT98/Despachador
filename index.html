@@ -38,7 +38,9 @@
                         <label for="process_blockages">Bloqueos</label>
                         <span class="helper-text" data-error="Se necesita un número" data-success="Correcto">Número</span>
                     </div>
-                    <div class="input-field col l2 s12"><a id="add-process-button" class="waves-effect waves-light btn">Añadir</a></div>
+                    <div class="input-field col l2 s12">
+                        <a id="add-process-button" class="waves-effect waves-light btn">Añadir</a>
+                    </div>
                 </div>
             </form>
         </div>
@@ -56,7 +58,7 @@
                         </div>
                         <div class="input-field col l3 s3">
                             <input class="validate" id="quantum_size" type="number">
-                            <label for="quantum_size">Quantum</label>
+                            <label for="quantum_size">Quantum (ms)</label>
                             <span class="helper-text" data-error="Se necesita un número" data-success="Correcto">Número</span>
                         </div>
                         <div class="input-field col l2 s3">
@@ -69,12 +71,23 @@
                             <label for="context_time">TCC</label>
                             <span class="helper-text" data-error="Se necesita un número" data-success="Correcto">Número</span>
                         </div>
-                        <div class="input-field col l2 s12"><a id="calculate-process-button" class="waves-effect waves-light btn">Calcular</a></div>
+                        <div class="input-field col l2 s12">
+                            <a id="calculate-process-button" class="waves-effect waves-light btn">Calcular</a>
+                        </div>
                     </div>
                 </li>
             </ul>
         </div>
-    </div>
+
+        <div class="row see-micro-wrapper">
+            <ul id="micro_collection" class="collection with-header">
+                <li class="collection-header">
+                    <div class="row">
+                        <h5 class="col l12 s12">Microprocesadores</h5>
+                    </div>
+                </li>
+            </ul>
+        </div>
 </body>
 
 </html>

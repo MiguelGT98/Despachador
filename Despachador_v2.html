@@ -1,143 +1,146 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <title>Despachador</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Despachador</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
-    <script>
-        var procesos=[];
-        var cuantum = 3000;
-        var cambios = 15;
-        var bloqueo = 15;
-        var micros = 2;
-        var microProcesador = []
-        
-        createProcceso(0,"B",300);
-        createProcceso(0,"D",100);
-        createProcceso(0,"F",500);
-        createProcceso(0,"H",700);
-        
-        createProcceso(1500,"J",300);
-        createProcceso(1500,"L",3000);
-        createProcceso(1500,"N",50);
-        createProcceso(1500,"O",600);
-        
-        createProcceso(3000,"A",400);
-        createProcceso(3000,"C",50);
-        createProcceso(3000,"E",1000);
-        createProcceso(3000,"G",10);
-        createProcceso(3000,"I",450);
-        
-        createProcceso(4000,"K",100);
-        createProcceso(4000,"M",80);
-        createProcceso(4000,"P",800);
-        
-        createProcceso(8000,"Ñ",500);
-        
-        for(i = 0; i <micros; i++){
-            var m = {
-                nombre:"Microprocesador "+(i+1),
-                tiempo:0,
-                proceso:[],
-                espera:true,
-            };
-            microProcesador.push(m);
-        }
-        
-        
-        function calcular(){
-            for(i = 0; i < procesos.length; i++){
-                b=bestMicro();
-                if(microProcesador[b].tiempo<procesos[i].iniciaEn){
-                    b=closestMicro(procesos[i]);
-                    microProcesador[b].espera=true;
-                    microProcesador[b].tiempo=procesos[i].iniciaEn
+<script>
+    var procesos = [];
+    var quantum = 3000;
+    var cambios = 15;
+    var bloqueo = 15;
+    var micros = 2;
+    var microProcesador = []
 
-                }
+    createProceso(0, "B", 300);
+    createProceso(0, "D", 100);
+    createProceso(0, "F", 500);
+    createProceso(0, "H", 700);
 
-                if(microProcesador[b].espera==false){
-                    procesos[i].cambioBloqueo=cambios;
-                }
-                
-                
-                calcularTiempos(procesos[i],microProcesador[b].tiempo);
-                microProcesador[b].proceso.push(procesos[i]);
-                microProcesador[b].tiempo=procesos[i].tiempoFinal;
-                microProcesador[b].espera=false;
-            }
-        }
-        
-        
-        
-          function bestMicro(){
-            var bestIndex = 0;
-             for(j = 0; j < microProcesador.length; j++){
-                if(microProcesador[bestIndex].tiempo>microProcesador[j].tiempo){
-                    bestIndex=j;
-                }
-            }
-            return bestIndex;
-          }
-        
-        
-        function closestMicro(p){
-            var index = 0;
-            var closest = 1000000;
-            var distance; 
-            
-            for(j = 0; j < microProcesador.length; j++){
-                distance=p.iniciaEn-microProcesador[j].tiempo;
+    createProceso(1500, "J", 300);
+    createProceso(1500, "L", 3000);
+    createProceso(1500, "N", 50);
+    createProceso(1500, "O", 600);
 
-                if(distance<closest && distance>0){
-                    index=j;
-                    closest=distance;
-                }
+    createProceso(3000, "A", 400);
+    createProceso(3000, "C", 50);
+    createProceso(3000, "E", 1000);
+    createProceso(3000, "G", 10);
+    createProceso(3000, "I", 450);
+
+    createProceso(4000, "K", 100);
+    createProceso(4000, "M", 80);
+    createProceso(4000, "P", 800);
+
+    createProceso(8000, "Ñ", 500);
+
+    for (i = 0; i < micros; i++) {
+        var m = {
+            nombre: "Microprocesador " + (i + 1),
+            tiempo: 0,
+            proceso: [],
+            espera: true,
+        };
+        microProcesador.push(m);
+    }
+
+
+    function ejecutarDespachador() {
+        for (i = 0; i < procesos.length; i++) {
+            b = bestMicro();
+            if (microProcesador[b].tiempo < procesos[i].iniciaEn) {
+                b = closestMicro(procesos[i]);
+                microProcesador[b].espera = true;
+                microProcesador[b].tiempo = procesos[i].iniciaEn
+
             }
-            return index
-        }
-    
-        
-    
-        function createProcceso(inicio,N,TE) {
-            if(TE<=400){
-                TB=2*bloqueo;
-            }else if((TE<=600)){
-                TB=3*bloqueo;
-            }else if((TE<=800)){
-                TB=4*bloqueo;
-            }else{
-                TB=5*bloqueo;
+
+            if (microProcesador[b].espera == false) {
+                procesos[i].cambioBloqueo = cambios;
             }
-            
-            if(cuantum<TE){
-                TVC=cuantum/TE;
-                TVC=(Mat.floor(TVC)-1)*cambios;
-            }else{
-                TVC=0;
+
+
+            calcularTiempos(procesos[i], microProcesador[b].tiempo);
+            microProcesador[b].proceso.push(procesos[i]);
+            microProcesador[b].tiempo = procesos[i].tiempoFinal;
+            microProcesador[b].espera = false;
+        }
+    }
+
+
+
+    function bestMicro() {
+        var bestIndex = 0;
+        for (j = 0; j < microProcesador.length; j++) {
+            if (microProcesador[bestIndex].tiempo > microProcesador[j].tiempo) {
+                bestIndex = j;
             }
-            var proceso = {
-                nombre:N,
-                cambioBloqueo:0,
-                ejecucion:TE,
-                vencimientoCuantum:TVC,
-                tiempoBloqueo:TB,
-                tiempoTotal:null,
-                tiempoInicial:null,
-                tiempoFinal:null,
-                iniciaEn:inicio,
-                
-            };
-            procesos.push(proceso)
         }
-        
-        function calcularTiempos(p, ti){
-            p.tiempoInicial=ti;
-            p.tiempoTotal=p.cambioBloqueo+p.ejecucion+p.vencimientoCuantum+p.tiempoBloqueo;
-            p.tiempoFinal= p.tiempoTotal+p.tiempoInicial;
+        return bestIndex;
+    }
+
+
+    function closestMicro(p) {
+        var index = 0;
+        var closest = 1000000;
+        var distance;
+
+        for (j = 0; j < microProcesador.length; j++) {
+            distance = p.iniciaEn - microProcesador[j].tiempo;
+
+            if (distance < closest && distance > 0) {
+                index = j;
+                closest = distance;
+            }
         }
-        calcular();
-        console.log(procesos);
-        console.log(microProcesador);
-    </script>
+        return index
+    }
+
+
+
+    function createProceso(inicio, N, TE) {
+        if (TE <= 400) {
+            TB = 2 * bloqueo;
+        } else if ((TE <= 600)) {
+            TB = 3 * bloqueo;
+        } else if ((TE <= 800)) {
+            TB = 4 * bloqueo;
+        } else {
+            TB = 5 * bloqueo;
+        }
+
+        if (quantum < TE) {
+            TVC = cuantum / TE;
+            TVC = (Math.floor(TVC) - 1) * cambios;
+        } else {
+            TVC = 0;
+        }
+        var proceso = {
+            nombre: N,
+            cambioBloqueo: 0,
+            ejecucion: TE,
+            vencimientoCuantum: TVC,
+            tiempoBloqueo: TB,
+            tiempoTotal: null,
+            tiempoInicial: null,
+            tiempoFinal: null,
+            iniciaEn: inicio,
+
+        };
+        procesos.push(proceso)
+    }
+
+    function calcularTiempos(p, ti) {
+        p.tiempoInicial = ti;
+        p.tiempoTotal = p.cambioBloqueo + p.ejecucion + p.vencimientoCuantum + p.tiempoBloqueo;
+        p.tiempoFinal = p.tiempoTotal + p.tiempoInicial;
+    }
+
+    ejecutarDespachador();
+    console.log(procesos);
+    console.log(microProcesador);
+</script>
+
 </html>
