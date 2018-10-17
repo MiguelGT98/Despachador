@@ -46,18 +46,14 @@
         }
         
         
-        
-        
-        
-        
-        
-        
         function calcular(){
             for(i = 0; i < procesos.length; i++){
                 b=bestMicro();
                 if(microProcesador[b].tiempo<procesos[i].iniciaEn){
+                    b=closestMicro(procesos[i]);
                     microProcesador[b].espera=true;
                     microProcesador[b].tiempo=procesos[i].iniciaEn
+
                 }
 
                 if(microProcesador[b].espera==false){
@@ -73,16 +69,35 @@
         }
         
         
-        function bestMicro(){
-            var bestIndex = 0
+        
+          function bestMicro(){
+            var bestIndex = 0;
              for(j = 0; j < microProcesador.length; j++){
                 if(microProcesador[bestIndex].tiempo>microProcesador[j].tiempo){
                     bestIndex=j;
                 }
             }
             return bestIndex;
+          }
+        
+        
+        function closestMicro(p){
+            var index = 0;
+            var closest = 1000000;
+            var distance; 
+            
+            for(j = 0; j < microProcesador.length; j++){
+                distance=p.iniciaEn-microProcesador[j].tiempo;
+
+                if(distance<closest && distance>0){
+                    index=j;
+                    closest=distance;
+                }
+            }
+            return index
         }
-                
+    
+        
     
         function createProcceso(inicio,N,TE) {
             if(TE<=400){
