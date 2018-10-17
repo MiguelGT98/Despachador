@@ -6,11 +6,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
     <script>
+
+        var cuantum = prompt("¿Cuanto tiempo dura el cuantum?");
+        var cambios = prompt("¿Cuanto tiempo dura el cambio de cuantum?");
+        var bloqueo = prompt("¿Cuanto tiempo dura el bloqueo?");
+        var micros = prompt("¿Cuantos micros son?");
+        
+        cuantum=Number(cuantum);
+        cambios=Number(cambios);
+        bloqueo=Number(bloqueo);
+        micros=Number(micros);
+        
+        //var cuantum = 3000;
+        //var cambios = 15;
+        //var bloqueo = 15;
+        //var micros = 2;
         var procesos=[];
-        var cuantum = 3000;
-        var cambios = 15;
-        var bloqueo = 15;
-        var micros = 2;
         var microProcesador = []
         
         createProcceso(0,"B",300);
