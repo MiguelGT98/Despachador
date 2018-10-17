@@ -6,14 +6,17 @@ document.addEventListener(
     addProcessButton.addEventListener("click", e => {
       addProcess();
     });
+
+    let calculateProcessButton = document.getElementById(
+      "calculate-process-button"
+    );
+
+    calculateProcessButton.addEventListener("click", e => {
+      obtainData();
+    });
   },
   false
 );
-
-let tiempoDeQuantum = 3000;
-let tiempoDeCambioDeContexto = 10;
-let tiempoDeBloqueo = 10;
-let numeroDeMicros = 1;
 
 let arrayProcesos = [];
 
@@ -107,3 +110,49 @@ let emptyInput = input => {
 let isNumber = n => {
   return !isNaN(+n) && isFinite(n);
 };
+
+let obtainData = () => {
+  let processorsInput = document.getElementById("processor_amount");
+  let quantumInput = document.getElementById("quantum_size");
+  let blockageTimeInput = document.getElementById("blockage_time");
+  let contextTimeInput = document.getElementById("context_time");
+
+  if (
+    processorsInput.value === "" ||
+    quantumInput.value === "" ||
+    blockageTimeInput.value === "" ||
+    contextTimeInput.value === "" ||
+    !isNumber(processorsInput.value) ||
+    !isNumber(quantumInput.value) ||
+    !isNumber(blockageTimeInput.value) ||
+    !isNumber(contextTimeInput.value)
+  ) {
+    if (processorsInput.value === "" || !isNumber(processorsInput.value)) {
+      processorsInput.classList.add("invalid");
+    }
+
+    if (quantumInput.value === "" || !isNumber(quantumInput.value)) {
+      quantumInput.classList.add("invalid");
+    }
+
+    if (blockageTimeInput.value === "" || !isNumber(blockageTimeInput.value)) {
+      blockageTimeInput.classList.add("invalid");
+    }
+
+    if (contextTimeInput.value === "" || !isNumber(contextTimeInput.value)) {
+      contextTimeInput.classList.add("invalid");
+    }
+    return;
+  }
+
+  let tiempoDeQuantum = parseInt(quantumInput.value);
+  let tiempoDeCambioDeContexto = parseInt(contextTimeInput.value);
+  let tiempoDeBloqueo = parseInt(blockageTimeInput.value);
+  let numeroDeMicros = parseInt(processorsInput.value);
+
+  calculate(numeroDeMicros, tiempoDeBloqueo, tiempoDeCambioDeContexto, tiempoDeQuantum, arrayProcesos);
+};
+
+let calculate = () =>{
+  console.log("calcular");
+}
