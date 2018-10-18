@@ -223,7 +223,7 @@ let calculate = (numeroDeMicros, tiempoDeBloqueo, tiempoDeCambioDeContexto, tiem
       }
 
       if (microProcesador[b].espera == false) {
-        procesos[i].cambioBloqueo = tiempoCambios;
+        procesos[i].cambioContexto = tiempoCambios;
       }
 
       calcularTiempos(procesos[i], microProcesador[b].tiempo);
@@ -262,7 +262,7 @@ let calculate = (numeroDeMicros, tiempoDeBloqueo, tiempoDeCambioDeContexto, tiem
 
   function calcularTiempos(p, ti) {
     p.tiempoInicial = ti;
-    p.tiempoTotal = p.cambioBloqueo + p.ejecucion + p.vencimientoCuantum + p.tiempoBloqueo;
+    p.tiempoTotal = p.cambioContexto + p.ejecucion + p.vencimientoCuantum + p.tiempoBloqueo;
     p.tiempoFinal = p.tiempoTotal + p.tiempoInicial;
   }
 
@@ -286,7 +286,7 @@ let calculate = (numeroDeMicros, tiempoDeBloqueo, tiempoDeCambioDeContexto, tiem
     }
     var proceso = {
       nombre: N,
-      cambioBloqueo: 0,
+      cambioContexto: 0,
       ejecucion: TE,
       vencimientoCuantum: TVC,
       tiempoBloqueo: TB,
@@ -344,7 +344,7 @@ let calculate = (numeroDeMicros, tiempoDeBloqueo, tiempoDeCambioDeContexto, tiem
         microTd1.append(microProcesador[i].proceso[j].nombre);
 
         let microTd2 = document.createElement("td");
-        microTd2.append(microProcesador[i].proceso[j].cambioBloqueo);
+        microTd2.append(microProcesador[i].proceso[j].cambioContexto);
 
         let microTd3 = document.createElement("td");
         microTd3.append(microProcesador[i].proceso[j].ejecucion);
