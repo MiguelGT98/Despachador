@@ -127,13 +127,14 @@ let obtainData = () => {
     !isNumber(processorsInput.value) ||
     !isNumber(quantumInput.value) ||
     !isNumber(blockageTimeInput.value) ||
-    !isNumber(contextTimeInput.value)
+    !isNumber(contextTimeInput.value) ||
+    Number(quantumInput.value) <= 0
   ) {
     if (processorsInput.value === "" || !isNumber(processorsInput.value)) {
       processorsInput.classList.add("invalid");
     }
 
-    if (quantumInput.value === "" || !isNumber(quantumInput.value)) {
+    if (quantumInput.value === "" || !isNumber(quantumInput.value)||Number(quantumInput.value) <= 0) {
       quantumInput.classList.add("invalid");
     }
 
@@ -166,10 +167,31 @@ let calculate = (numeroDeMicros, tiempoDeBloqueo, tiempoDeCambioDeContexto, tiem
 
   var procesos = [];
   var microProcesador = [];
+    createProceso(0, "B", 300);
+    createProceso(0, "D", 100);
+    createProceso(0, "F", 500);
+    createProceso(0, "H", 700);
 
+    createProceso(1500, "J", 300);
+    createProceso(1500, "L", 3000);
+    createProceso(1500, "N", 50);
+    createProceso(1500, "O", 600);
+
+    createProceso(3000, "A", 400);
+    createProceso(3000, "C", 50);
+    createProceso(3000, "E", 1000);
+    createProceso(3000, "G", 10);
+    createProceso(3000, "I", 450);
+
+    createProceso(4000, "K", 100);
+    createProceso(4000, "M", 80);
+    createProceso(4000, "P", 800);
+
+    createProceso(8000, "Ñ", 500);
+
+/*
   for (i = 0; i < arrayProcesos.length; i++) {
     createProceso(
-      /* Se parsea porque si no se consigue texto */
       parseInt(arrayProcesos[i].empiezaEn),
       arrayProcesos[i].nombre,
       parseInt(arrayProcesos[i].tiempoDeEjecucion),
@@ -177,7 +199,7 @@ let calculate = (numeroDeMicros, tiempoDeBloqueo, tiempoDeCambioDeContexto, tiem
     )
   }
 
-  /*for (i = 0; i < procesos.length; i++) {
+  for (i = 0; i < procesos.length; i++) {
     console.log(procesos[i]);
   }*/
 
@@ -201,7 +223,7 @@ let calculate = (numeroDeMicros, tiempoDeBloqueo, tiempoDeCambioDeContexto, tiem
       }
 
       if (microProcesador[b].espera == false) {
-        procesos[i].cambioBloqueo = tiempoCambios;
+        procesos[i].cambioContexto = tiempoCambios;
       }
 
       calcularTiempos(procesos[i], microProcesador[b].tiempo);
@@ -240,13 +262,13 @@ let calculate = (numeroDeMicros, tiempoDeBloqueo, tiempoDeCambioDeContexto, tiem
 
   function calcularTiempos(p, ti) {
     p.tiempoInicial = ti;
-    p.tiempoTotal = p.cambioBloqueo + p.ejecucion + p.vencimientoCuantum + p.tiempoBloqueo;
+    p.tiempoTotal = p.cambioContexto + p.ejecucion + p.vencimientoCuantum + p.tiempoBloqueo;
     p.tiempoFinal = p.tiempoTotal + p.tiempoInicial;
   }
 
-  function createProceso(inicio, N, TE, numBloqueos) {
+  function createProceso(inicio, N, TE) {
     /* No lo manejamos de forma automatica */
-    /*if (TE <= 400) {
+    if (TE <= 400) {
       TB = 2 * bloqueo;
     } else if ((TE <= 600)) {
       TB = 3 * bloqueo;
@@ -254,20 +276,20 @@ let calculate = (numeroDeMicros, tiempoDeBloqueo, tiempoDeCambioDeContexto, tiem
       TB = 4 * bloqueo;
     } else {
       TB = 5 * bloqueo;
-    }*/
+    }
 
     if (quantum < TE) {
-      TVC = quantum / TE;
-      TVC = (Math.floor(TVC) - 1) * tiempoCambios;
+      TVC = TE/quantum;
+      TVC = (Math.ceil(TVC) - 1) * tiempoCambios;
     } else {
       TVC = 0;
     }
     var proceso = {
       nombre: N,
-      cambioBloqueo: 0,
+      cambioContexto: 0,
       ejecucion: TE,
       vencimientoCuantum: TVC,
-      tiempoBloqueo: numBloqueos * bloqueo,
+      tiempoBloqueo: TB,
       tiempoTotal: null,
       tiempoInicial: null,
       tiempoFinal: null,
@@ -322,7 +344,7 @@ let calculate = (numeroDeMicros, tiempoDeBloqueo, tiempoDeCambioDeContexto, tiem
         microTd1.append(microProcesador[i].proceso[j].nombre);
 
         let microTd2 = document.createElement("td");
-        microTd2.append(microProcesador[i].proceso[j].cambioBloqueo);
+        microTd2.append(microProcesador[i].proceso[j].cambioContexto);
 
         let microTd3 = document.createElement("td");
         microTd3.append(microProcesador[i].proceso[j].ejecucion);
