@@ -73,7 +73,6 @@
         }
         
         
-        
         function bestMicro(){
             var bestIndex = 0
              for(j = 0; j < microProcesador.length; j++){
@@ -83,19 +82,7 @@
             }
             return bestIndex;
         }
-        
-        function worstMicro(){
-            var worstIndex = 0
-             for(k = 0; k < microProcesador.length; k++){
-                if(microProcesador[worstIndex].tiempo<microProcesador[j].tiempo){
-                    worstIndex=k;
-                }
-            }
-            return worstIndex;
-        }
-        
-        
-        
+                
     
         function createProcceso(inicio,N,TE) {
             if(TE<=400){
@@ -109,8 +96,8 @@
             }
             
             if(cuantum<TE){
-                TVC=cuantum%TE;
-                TVC=TVC*cambios;
+                TVC=cuantum/TE;
+                TVC=(Mat.floor(TVC)-1)*cambios;
             }else{
                 TVC=0;
             }
