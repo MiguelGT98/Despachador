@@ -254,9 +254,10 @@ let calculate = (numeroDeMicros, tiempoDeBloqueo, tiempoDeCambioDeContexto, tiem
 
       if (distance < closest && distance > 0) {
         index = j;
-        closest = distance;
+          return index;
       }
     }
+      
     return index
   }
 
