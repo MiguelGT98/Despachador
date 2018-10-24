@@ -3,9 +3,7 @@ document.addEventListener(
   () => {
     let addProcessButton = document.getElementById("add-process-button");
 
-    addProcessButton.addEventListener("click", e => {
-      addProcess();
-    });
+    
 
     let calculateProcessButton = document.getElementById(
       "calculate-process-button"
@@ -128,9 +126,12 @@ let obtainData = () => {
     !isNumber(quantumInput.value) ||
     !isNumber(blockageTimeInput.value) ||
     !isNumber(contextTimeInput.value) ||
-    Number(quantumInput.value) <= 0
+    Number(processorsInput.value) <= 0 || 
+    Number(quantumInput.value) <= 0 ||
+    Number(blockageTimeInput.value) <= 0 ||
+    Number(contextTimeInput.value) <= 0
   ) {
-    if (processorsInput.value === "" || !isNumber(processorsInput.value)) {
+    if (processorsInput.value === "" || !isNumber(processorsInput.value)||Number(processorsInput.value) <= 0) {
       processorsInput.classList.add("invalid");
     }
 
@@ -138,11 +139,11 @@ let obtainData = () => {
       quantumInput.classList.add("invalid");
     }
 
-    if (blockageTimeInput.value === "" || !isNumber(blockageTimeInput.value)) {
+    if (blockageTimeInput.value === "" || !isNumber(blockageTimeInput.value)||Number(blockageTimeInput.value) <= 0) {
       blockageTimeInput.classList.add("invalid");
     }
 
-    if (contextTimeInput.value === "" || !isNumber(contextTimeInput.value)) {
+    if (contextTimeInput.value === "" || !isNumber(contextTimeInput.value)||Number(contextTimeInput.value) <= 0) {
       contextTimeInput.classList.add("invalid");
     }
     return;
@@ -214,11 +215,13 @@ let calculate = (numeroDeMicros, tiempoDeBloqueo, tiempoDeCambioDeContexto, tiem
   }
 
   function ejecutarDespachador() {
+    document.getElementById("micro_collection").innerHTML="";
     for (i = 0; i < procesos.length; i++) {
       b = bestMicro();
       if (microProcesador[b].tiempo < procesos[i].iniciaEn) {
         b = closestMicro(procesos[i]);
         microProcesador[b].espera = true;
+         microProcesador[b].proceso.push(createProcesoE("",b,procesos[i].iniciaEn));
         microProcesador[b].tiempo = procesos[i].iniciaEn
       }
 
@@ -286,17 +289,32 @@ let calculate = (numeroDeMicros, tiempoDeBloqueo, tiempoDeCambioDeContexto, tiem
       TVC = 0;
     }
     var proceso = {
-      nombre: N,
+      nombre:N,
       cambioContexto: 0,
       ejecucion: TE,
       vencimientoCuantum: TVC,
       tiempoBloqueo: TB,
-      tiempoTotal: null,
-      tiempoInicial: null,
-      tiempoFinal: null,
+      tiempoTotal: 0,
+      tiempoInicial: 0,
+      tiempoFinal: 0,
       iniciaEn: inicio,
     };
     procesos.push(proceso)
+  }
+    
+function createProcesoE(N,micro,tiempoProceso) {
+    var proceso = {
+      nombre:N,
+      cambioContexto: "",
+      ejecucion: "",
+      vencimientoCuantum: "",
+      tiempoBloqueo: "",
+      tiempoTotal: "",
+      tiempoInicial: microProcesador[micro].tiempo,
+      tiempoFinal: tiempoProceso,
+      iniciaEn: "",
+    };
+    return proceso;
   }
 
   function crearTablas() {
@@ -314,8 +332,11 @@ let calculate = (numeroDeMicros, tiempoDeBloqueo, tiempoDeCambioDeContexto, tiem
       let microThead = document.createElement("thead");
       let microTbody = document.createElement("tbody");
 
+      let microTitle = document.createElement("tr");
+      microTitle.append(microProcesador[i].nombre);// No se como ponerlo mejor :v me da flojera ver xD
+    
       let microTrow = document.createElement("tr");
-
+        
       let microTh1 = document.createElement("th");
       microTh1.append("Nombre");
 
@@ -373,10 +394,12 @@ let calculate = (numeroDeMicros, tiempoDeBloqueo, tiempoDeCambioDeContexto, tiem
       }
 
       microTrow.append(microTh1, microTh2, microTh3, microTh4, microTh5, microTh6, microTh7, microTh8);
+      microThead.append(microTitle);
       microThead.append(microTrow);
       microTable.append(microThead, microTbody);
       microLi.append(microTable);
       microCollection.appendChild(microLi);
+
     }
 
 
