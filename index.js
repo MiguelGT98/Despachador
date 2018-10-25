@@ -3,8 +3,6 @@ document.addEventListener(
   () => {
     let addProcessButton = document.getElementById("add-process-button");
 
-    
-
     let calculateProcessButton = document.getElementById(
       "calculate-process-button"
     );
@@ -18,7 +16,7 @@ document.addEventListener(
 
 let arrayProcesos = [];
 
-calcularTiempo = algo => { };
+calcularTiempo = algo => {};
 
 let addProcess = () => {
   let nameInput = document.getElementById("process_name");
@@ -94,9 +92,14 @@ let showProcess = process => {
   let processSecondary = document.createElement("div");
   processSecondary.classList.add("secondary-content");
   processSecondary.innerText =
-    "Tiempo de ejecución: " + process.tiempoDeEjecucion + " | " +
-    "Inicia en: " + process.empiezaEn + " | " +
-    "Número de bloqueos: " + process.numeroDeBloqueos;
+    "Tiempo de ejecución: " +
+    process.tiempoDeEjecucion +
+    " | " +
+    "Inicia en: " +
+    process.empiezaEn +
+    " | " +
+    "Número de bloqueos: " +
+    process.numeroDeBloqueos;
   processDiv.appendChild(processSecondary);
 
   collection.appendChild(processLi);
@@ -126,24 +129,40 @@ let obtainData = () => {
     !isNumber(quantumInput.value) ||
     !isNumber(blockageTimeInput.value) ||
     !isNumber(contextTimeInput.value) ||
-    Number(processorsInput.value) <= 0 || 
+    Number(processorsInput.value) <= 0 ||
     Number(quantumInput.value) <= 0 ||
     Number(blockageTimeInput.value) <= 0 ||
     Number(contextTimeInput.value) <= 0
   ) {
-    if (processorsInput.value === "" || !isNumber(processorsInput.value)||Number(processorsInput.value) <= 0) {
+    if (
+      processorsInput.value === "" ||
+      !isNumber(processorsInput.value) ||
+      Number(processorsInput.value) <= 0
+    ) {
       processorsInput.classList.add("invalid");
     }
 
-    if (quantumInput.value === "" || !isNumber(quantumInput.value)||Number(quantumInput.value) <= 0) {
+    if (
+      quantumInput.value === "" ||
+      !isNumber(quantumInput.value) ||
+      Number(quantumInput.value) <= 0
+    ) {
       quantumInput.classList.add("invalid");
     }
 
-    if (blockageTimeInput.value === "" || !isNumber(blockageTimeInput.value)||Number(blockageTimeInput.value) <= 0) {
+    if (
+      blockageTimeInput.value === "" ||
+      !isNumber(blockageTimeInput.value) ||
+      Number(blockageTimeInput.value) <= 0
+    ) {
       blockageTimeInput.classList.add("invalid");
     }
 
-    if (contextTimeInput.value === "" || !isNumber(contextTimeInput.value)||Number(contextTimeInput.value) <= 0) {
+    if (
+      contextTimeInput.value === "" ||
+      !isNumber(contextTimeInput.value) ||
+      Number(contextTimeInput.value) <= 0
+    ) {
       contextTimeInput.classList.add("invalid");
     }
     return;
@@ -154,13 +173,24 @@ let obtainData = () => {
   let tiempoDeBloqueo = parseInt(blockageTimeInput.value);
   let numeroDeMicros = parseInt(processorsInput.value);
 
-  calculate(numeroDeMicros, tiempoDeBloqueo, tiempoDeCambioDeContexto, tiempoDeQuantum, arrayProcesos);
+  calculate(
+    numeroDeMicros,
+    tiempoDeBloqueo,
+    tiempoDeCambioDeContexto,
+    tiempoDeQuantum,
+    arrayProcesos
+  );
 };
-
 
 /* Manejo de la logica del algoritmo */
 
-let calculate = (numeroDeMicros, tiempoDeBloqueo, tiempoDeCambioDeContexto, tiempoDeQuantum, arrayProcesos) => {
+let calculate = (
+  numeroDeMicros,
+  tiempoDeBloqueo,
+  tiempoDeCambioDeContexto,
+  tiempoDeQuantum,
+  arrayProcesos
+) => {
   var quantum = tiempoDeQuantum;
   var tiempoCambios = tiempoDeCambioDeContexto;
   var bloqueo = tiempoDeBloqueo;
@@ -168,29 +198,29 @@ let calculate = (numeroDeMicros, tiempoDeBloqueo, tiempoDeCambioDeContexto, tiem
 
   var procesos = [];
   var microProcesador = [];
-    createProceso(0, "B", 300);
-    createProceso(0, "D", 100);
-    createProceso(0, "F", 500);
-    createProceso(0, "H", 700);
+  createProceso(0, "B", 300);
+  createProceso(0, "D", 100);
+  createProceso(0, "F", 500);
+  createProceso(0, "H", 700);
 
-    createProceso(1500, "J", 300);
-    createProceso(1500, "L", 3000);
-    createProceso(1500, "N", 50);
-    createProceso(1500, "O", 600);
+  createProceso(1500, "J", 300);
+  createProceso(1500, "L", 3000);
+  createProceso(1500, "N", 50);
+  createProceso(1500, "O", 600);
 
-    createProceso(3000, "A", 400);
-    createProceso(3000, "C", 50);
-    createProceso(3000, "E", 1000);
-    createProceso(3000, "G", 10);
-    createProceso(3000, "I", 450);
+  createProceso(3000, "A", 400);
+  createProceso(3000, "C", 50);
+  createProceso(3000, "E", 1000);
+  createProceso(3000, "G", 10);
+  createProceso(3000, "I", 450);
 
-    createProceso(4000, "K", 100);
-    createProceso(4000, "M", 80);
-    createProceso(4000, "P", 800);
+  createProceso(4000, "K", 100);
+  createProceso(4000, "M", 80);
+  createProceso(4000, "P", 800);
 
-    createProceso(8000, "Ñ", 500);
+  createProceso(8000, "Ñ", 500);
 
-/*
+  /*
   for (i = 0; i < arrayProcesos.length; i++) {
     createProceso(
       parseInt(arrayProcesos[i].empiezaEn),
@@ -209,20 +239,22 @@ let calculate = (numeroDeMicros, tiempoDeBloqueo, tiempoDeCambioDeContexto, tiem
       nombre: "Microprocesador " + (i + 1),
       tiempo: 0,
       proceso: [],
-      espera: true,
+      espera: true
     };
     microProcesador.push(m);
   }
 
   function ejecutarDespachador() {
-    document.getElementById("micro_collection").innerHTML="";
+    document.getElementById("micro_collection").innerHTML = "";
     for (i = 0; i < procesos.length; i++) {
       b = bestMicro();
       if (microProcesador[b].tiempo < procesos[i].iniciaEn) {
         b = closestMicro(procesos[i]);
         microProcesador[b].espera = true;
-         microProcesador[b].proceso.push(createProcesoE("",b,procesos[i].iniciaEn));
-        microProcesador[b].tiempo = procesos[i].iniciaEn
+        microProcesador[b].proceso.push(
+          createProcesoE("", b, procesos[i].iniciaEn)
+        );
+        microProcesador[b].tiempo = procesos[i].iniciaEn;
       }
 
       if (microProcesador[b].espera == false) {
@@ -246,7 +278,6 @@ let calculate = (numeroDeMicros, tiempoDeBloqueo, tiempoDeCambioDeContexto, tiem
     return bestIndex;
   }
 
-
   function closestMicro(p) {
     var index = 0;
     var closest = 1000000;
@@ -257,16 +288,17 @@ let calculate = (numeroDeMicros, tiempoDeBloqueo, tiempoDeCambioDeContexto, tiem
 
       if (distance < closest && distance > 0) {
         index = j;
-          return index;
+        return index;
       }
     }
-      
-    return index
+
+    return index;
   }
 
   function calcularTiempos(p, ti) {
     p.tiempoInicial = ti;
-    p.tiempoTotal = p.cambioContexto + p.ejecucion + p.vencimientoCuantum + p.tiempoBloqueo;
+    p.tiempoTotal =
+      p.cambioContexto + p.ejecucion + p.vencimientoCuantum + p.tiempoBloqueo;
     p.tiempoFinal = p.tiempoTotal + p.tiempoInicial;
   }
 
@@ -274,22 +306,22 @@ let calculate = (numeroDeMicros, tiempoDeBloqueo, tiempoDeCambioDeContexto, tiem
     /* No lo manejamos de forma automatica */
     if (TE <= 400) {
       TB = 2 * bloqueo;
-    } else if ((TE <= 600)) {
+    } else if (TE <= 600) {
       TB = 3 * bloqueo;
-    } else if ((TE <= 800)) {
+    } else if (TE <= 800) {
       TB = 4 * bloqueo;
     } else {
       TB = 5 * bloqueo;
     }
 
     if (quantum < TE) {
-      TVC = TE/quantum;
+      TVC = TE / quantum;
       TVC = (Math.ceil(TVC) - 1) * tiempoCambios;
     } else {
       TVC = 0;
     }
     var proceso = {
-      nombre:N,
+      nombre: N,
       cambioContexto: 0,
       ejecucion: TE,
       vencimientoCuantum: TVC,
@@ -297,14 +329,14 @@ let calculate = (numeroDeMicros, tiempoDeBloqueo, tiempoDeCambioDeContexto, tiem
       tiempoTotal: 0,
       tiempoInicial: 0,
       tiempoFinal: 0,
-      iniciaEn: inicio,
+      iniciaEn: inicio
     };
-    procesos.push(proceso)
+    procesos.push(proceso);
   }
-    
-function createProcesoE(N,micro,tiempoProceso) {
+
+  function createProcesoE(N, micro, tiempoProceso) {
     var proceso = {
-      nombre:N,
+      nombre: N,
       cambioContexto: "",
       ejecucion: "",
       vencimientoCuantum: "",
@@ -312,7 +344,7 @@ function createProcesoE(N,micro,tiempoProceso) {
       tiempoTotal: "",
       tiempoInicial: microProcesador[micro].tiempo,
       tiempoFinal: tiempoProceso,
-      iniciaEn: "",
+      iniciaEn: ""
     };
     return proceso;
   }
@@ -332,11 +364,36 @@ function createProcesoE(N,micro,tiempoProceso) {
       let microThead = document.createElement("thead");
       let microTbody = document.createElement("tbody");
 
-      let microTitle = document.createElement("tr");
-      microTitle.append(microProcesador[i].nombre);// No se como ponerlo mejor :v me da flojera ver xD
-    
+      let microTitle = document.createElement("div");
+      microTitle.classList.add("micro-title-container");
+      let microTitleText = document.createElement("h5");
+      let microTitleSpan = document.createElement("span");
+
+      microTitleText.append(microProcesador[i].nombre);
+
+      let procesosAtendidos = microProcesador[i].proceso.reduce(
+        (cantidad, proceso) => {
+          if (proceso.nombre !== "") {
+            console.log(cantidad);
+            cantidad += 1;
+          }
+          return cantidad;
+        },
+        0
+      );
+
+      microTitleSpan.append("Procesos atendidos: ");
+      microTitleSpan.append(procesosAtendidos);
+      microTitleSpan.append(" | ");
+      microTitleSpan.append("Tiempo total: ");
+      microTitleSpan.append(microProcesador[i].tiempo);
+      microTitleSpan.append(" (ms)");
+
+      microTitle.appendChild(microTitleText);
+      microTitle.appendChild(microTitleSpan);
+
       let microTrow = document.createElement("tr");
-        
+
       let microTh1 = document.createElement("th");
       microTh1.append("Nombre");
 
@@ -386,28 +443,45 @@ function createProcesoE(N,micro,tiempoProceso) {
         let microTd8 = document.createElement("td");
         microTd8.append(microProcesador[i].proceso[j].tiempoFinal);
 
-
         let microTrow2 = document.createElement("tr");
-        microTrow2.append(microTd1, microTd2, microTd3, microTd4, microTd5, microTd6, microTd7, microTd8);
+
+        if (microProcesador[i].proceso[j].nombre === "") {
+          microTrow2.classList.add("salto");
+        }
+
+        microTrow2.append(
+          microTd1,
+          microTd2,
+          microTd3,
+          microTd4,
+          microTd5,
+          microTd6,
+          microTd7,
+          microTd8
+        );
 
         microTbody.append(microTrow2);
       }
 
-      microTrow.append(microTh1, microTh2, microTh3, microTh4, microTh5, microTh6, microTh7, microTh8);
-      microThead.append(microTitle);
+      microTrow.append(
+        microTh1,
+        microTh2,
+        microTh3,
+        microTh4,
+        microTh5,
+        microTh6,
+        microTh7,
+        microTh8
+      );
       microThead.append(microTrow);
       microTable.append(microThead, microTbody);
-      microLi.append(microTable);
+      microLi.append(microTitle, microTable);
       microCollection.appendChild(microLi);
-
     }
-
-
-
   }
 
   /* Una vez establecidos los valores se llama a la funcion del despachador para ejecutarse */
   ejecutarDespachador();
   crearTablas();
   /**************************************************************************************** */
-}
+};
