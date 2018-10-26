@@ -131,8 +131,8 @@ let obtainData = () => {
     !isNumber(contextTimeInput.value) ||
     Number(processorsInput.value) <= 0 ||
     Number(quantumInput.value) <= 0 ||
-    Number(blockageTimeInput.value) <= 0 ||
-    Number(contextTimeInput.value) <= 0
+    Number(blockageTimeInput.value) < 0 ||
+    Number(contextTimeInput.value) < 0
   ) {
     if (
       processorsInput.value === "" ||
@@ -153,7 +153,7 @@ let obtainData = () => {
     if (
       blockageTimeInput.value === "" ||
       !isNumber(blockageTimeInput.value) ||
-      Number(blockageTimeInput.value) <= 0
+      Number(blockageTimeInput.value) < 0
     ) {
       blockageTimeInput.classList.add("invalid");
     }
@@ -161,7 +161,7 @@ let obtainData = () => {
     if (
       contextTimeInput.value === "" ||
       !isNumber(contextTimeInput.value) ||
-      Number(contextTimeInput.value) <= 0
+      Number(contextTimeInput.value) < 0
     ) {
       contextTimeInput.classList.add("invalid");
     }
