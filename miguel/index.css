@@ -1,0 +1,42 @@
+body {
+  font-size: 16px;
+  font-family: "Nunito Sans", sans-serif !important;
+}
+
+.outer-wrapper {
+  max-width: 960px;
+  margin: 5rem auto;
+  display: block;
+}
+
+.btn {
+  float: right;
+}
+
+.salto {
+  background-color: #fdfca3 !important;
+}
+
+.micro-title-container {
+  padding: 2rem 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.micro-title-container h5 {
+  font-weight: 700;
+}
+
+.micro-title-container span {
+  padding-right: 1rem;
+}
+
+th {
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+table.striped > tbody > tr > td {
+  text-align: center;
+}
